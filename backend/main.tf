@@ -7,8 +7,8 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "arnehi-github-rg"          # Can be passed via `-backend-config=`"resource_group_name=<resource group name>"` in the `init` command.
-    storage_account_name = "sa-github"                 # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
-    container_name       = "sc-github"                 # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
+    storage_account_name = "sa-github-arnehi-gresfrse"                 # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
+    container_name       = "sc-githu-arnehi-fresfera"                 # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
     key                  = "backend.terraform.tfstate" # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
   }
 }
@@ -39,7 +39,7 @@ resource "azurerm_resource_group" "rg_backend" {
 }
 
 resource "azurerm_storage_account" "sa_backend" {
-  name                     = "${lower(var.sa_name)}_${random_string.random_string.result}"
+  name                     = var.sa_name          #name                     = "${lower(var.sa_name)}_${random_string.random_string.result}"
   resource_group_name      = var.rg_name
   location                 = var.location
   account_tier             = "Standard"
@@ -51,7 +51,7 @@ resource "azurerm_storage_account" "sa_backend" {
 }
 
 resource "azurerm_storage_container" "sc_backend" {
-  name                  = "${lower(var.sc_name)}_${random_string.random_string.result}"
+  name                  = var.sc_name               #name                  = "${lower(var.sc_name)}_${random_string.random_string.result}"
   storage_account_name  = azurerm_storage_account.sa_backend.name
   container_access_type = "private"
 }
